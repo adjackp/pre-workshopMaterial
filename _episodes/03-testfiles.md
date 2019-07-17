@@ -1,7 +1,7 @@
 ---
 title: "Obtaining The Test Files"
-teaching: 10
-exercises: 1
+teaching: 30
+exercises: 20
 questions:
 - What is an xAOD and a DxAOD?
 - What can we learn from a DSID and filename?

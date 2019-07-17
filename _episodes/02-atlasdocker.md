@@ -1,7 +1,7 @@
 ---
 title: "Setting up the ATLAS Environment"
 teaching: 30
-exercises: 1
+exercises: 30
 questions:
 - What is a "release"?
 - How can I configure my laptop to use "ATLAS code"?

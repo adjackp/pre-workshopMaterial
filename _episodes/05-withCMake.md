@@ -1,6 +1,6 @@
 ---
 title: "Building With CMake"
-teaching: 10
+teaching: 60
 exercises: 30
 questions:
 - Is it easier to compile using CMake and GNU Make?

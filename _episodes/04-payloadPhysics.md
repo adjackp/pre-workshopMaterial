@@ -1,7 +1,7 @@
 ---
 title: "Running the Basic Analysis"
-teaching: 15
-exercises: 1
+teaching: 60
+exercises: 30
 questions:
 - What is the basic order of operations for building/executing your program with CMake?
 - How do you access the data of the DAOD within the C++ code?

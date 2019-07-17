@@ -1,6 +1,6 @@
 ---
 title: "Introduction"
-teaching: 10
+teaching: 30
 exercises: 0
 questions:
 - What type of physics will I be analyzing this week?
@@ -97,11 +97,6 @@ Therefore, throughout this bootcamp, this is the primary observable that we will
 > the pre-workshop activity here, you will be guided to explore only the first of these.
 >
 {: .challenge}
-
-
-
-
-## Accessing the Information
 
 
 

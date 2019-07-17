@@ -1,7 +1,7 @@
 ---
 title: "Your First Plot"
-teaching: 10
-exercises: 1
+teaching: 30
+exercises: 60
 questions:
 - What does the invariant mass spectrum of the two leading jets look like?
 - What is a "cut"?
@@ -25,23 +25,21 @@ not be left as a one-and-done exercise now.  So if you are struggling to make th
 > ## Exercise
 >
 > Similar to how you would in an analysis, fill histograms of
-> * the number of jets in the event
-> * and the invariant mass of the two leading jets
-> and then save the output.
+> - The number of jets in the event that pass the
+> - and the invariant mass of the two "leading jets", by which we mean the jets with the largest transverse momentum among the collection of jets
+> and then save the output to a ROOT file and draw the resulting histograms (be sure to label your axes!).
 >
-> > ## Hint
-> >
-> > * You will need to include a ([TH1 class](https://root.cern.ch/doc/master/classTH1D.html)) from ROOT
-> > * At this level you should be familiar with combining 4-momentum to calculate the invariant mass of the di-jet system
-> >
-> {: .prereq}
+> If you have done things properly, then you should be able to reproduce the following results.
 >
-> The invariant mass plot you will be producing should look something like this
+> <center>
+> <img src="../fig/spectrum_njets.png" style="width:500px;height:400px">
+> <img src="../fig/spectrum_mjj.png" style="width:500px;height:400px">
+> </center>
 >
-> ![](../fig/spectrum_mjj.png)
-> ![](../fig/spectrum_njets.png)
->
-> You are not meant to struggle with this exercise but a sample solution is included below. However please try your best to complete the exercise before attending the workshop.
+> You are not meant to struggle with this exercise.  If you are having troubles, please ask on the Mattermost channel.  However
+> if you find it more useful, a sample solution is included below. However please try your best to complete the exercise
+> before attending the workshop.  It will be assumed on Monday that everyone has a working version of this code locally on their
+> computer.
 >
 > > ## Solution
 > >
@@ -140,6 +138,7 @@ not be left as a one-and-done exercise now.  So if you are struggling to make th
 > - You will probably need to use these two libraries in [ROOT](https://root.cern.ch/) :
 >   - [TH1D](https://root.cern.ch/doc/master/classTH1D.html) : For making histograms. Google if you need examples on how to use this.
 >   - [TFile](https://root.cern.ch/doc/master/classTFile.html) : For saving the histograms so you can access/draw them later.
+>   - [TLorentzVector](https://root.cern.ch/doc/master/classTLorentzVector.html) : Helpful when doing 4-vector math.
 > - Remember you will need to include the header (`#include`) of these libraries, like any external C++ functionality.
 > - Don't forget to `TFile::Close` your output file.
 >
