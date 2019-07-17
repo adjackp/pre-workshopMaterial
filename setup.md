@@ -1,106 +1,149 @@
 ---
-title: Setup
+title: HEP Computing "Basics"
 ---
 
-## Install Docker on local machines
+## What you need to know
 
-> ## About Docker and Introductions
-> For the majority of this workshop we will be using Docker and working in an ```AnalysisBase``` release container so it is required that you download Docker and make an account. There are a lot of pros and cons to this, which we won’t discuss here.
+Throughout this workshop we will assuming previous knowledge in Unix, Python, C++ and compiling to a basic level. Luckily these topics are heavily documented already and there is a lot of material available so if you feel you are not very confident with any of these prerequisites please read the links below and work through the examples before you arrive.
+
+It is not necessary for you to be an expert but it would be beneficial to have some experience and to feel comfortable working with them.
+
+> ## Prerequisite Checklist
+> - Unix and the Terminal : Review and understand the contents of the [Software Carpentry Tutorial](http://swcarpentry.github.io/shell-novice/).
+> - Essential C++ : Ensure you understand the concepts in the "Bare Minimum" checklist.
+> - Building Code : Know the difference between compiling and linking.
+> - Python : Review and understand the contents of the [Software Carpentry Tutorial](http://swcarpentry.github.io/python-novice-inflammation/).
 >
-> General information about Docker and details of installation can be found here: ([About/Install](https://docs.docker.com/install/))
->
-> Depending on the operating system you are using on the local machine, links to specific instructions on the Docker website can be found below.
->
-{: .prereq}
-
-<div id="DockerOS"> {% comment %} Start of 'DockerOS' section. {% endcomment %}
-  <div>
-    <ul class="nav nav-tabs nav-justified" role="tablist">
-      <li role="presentation" class="active"><a data-os="windows" href="#docker-windows" aria-controls="Windows" role="tab" data-toggle="tab">Windows</a></li>
-      <li role="presentation"><a data-os="macos" href="#docker-macos" aria-controls="MacOS" role="tab" data-toggle="tab">MacOS</a></li>
-      <li role="presentation"><a data-os="linux" href="#docker-linux" aria-controls="Linux" role="tab" data-toggle="tab">Linux</a></li>
-    </ul>
-
-    <div class="tab-content">
-      <article role="tabpanel" class="tab-pane active" id="docker-windows">
-        <p>
-          <br/>
-          Download Docker for Windows <a href="https://docs.docker.com/docker-for-windows/install/">instructions</a>.<br>
-          <br/>
-          Docker Desktop for Windows is the Community Edition (CE) of Docker for Microsoft Windows. To download Docker Desktop for Windows, head to <a href="https://hub.docker.com/editions/community/docker-ce-desktop-windows">Docker Hub</a>. <br>
-          <br/>
-          Please read the relevant information on these pages, it should take no more than 5 minutes.
-          <br/>
-        </p>
-      </article>
-      <article role="tabpanel" class="tab-pane" id="docker-macos">
-        <p>
-          <br/>
-          Download Docker for MacOS <a href="https://docs.docker.com/docker-for-mac/install/">instructions</a>.<br>
-          <br/>
-          Docker is a full development platform for creating containerized apps, and Docker Desktop for Mac is the best way to get started with Docker on a Mac. To download Docker Desktop for MacOS, head to <a href="https://hub.docker.com/editions/community/docker-ce-desktop-mac">Docker Hub</a>. <br>
-          <br/>
-          Please read the relevant information on these pages, it should take no more than 5 minutes.
-          <br/>
-        </p>
-      </article>
-      <article role="tabpanel" class="tab-pane" id="docker-linux">
-        <p>
-          <br/>
-          Downloading and installing Docker for Linux may be slightly more difficult but please contact the organisers or tutors as soon as possible so they can help with any problems.<br>
-          <br/>
-          Here are the instructions for two popular Linux distributions:
-          <li><a href="https://docs.docker.com/install/linux/docker-ce/CentOS/">CentOS</a></li>
-          <li><a href="https://docs.docker.com/install/linux/docker-ce/ubuntu/">Ubuntu</a></li>
-          <br/>
-          Instructions for other Linux distributions can be found on the Docker docs pages.
-          <br/>
-        </p>
-      </article>
-    </div>
-  </div>
-</div> {% comment %} End of 'shell' section. {% endcomment %}
-
-> ## Important Note
-> Be sure to read the Docker documentation on post-installation steps for Linux and managing Docker as a <a href="https://docs.docker.com/install/linux/linux-postinstall/">non-root user</a>. 
->
-> This will allow you to edit files when you have started up the Docker container from your image. 
->
-{: .callout}
-
-
-## Download an ATLAS AnalysisBase Release
-
-You normally start out by downloading the Docker image for the release you want (not strictly necessary, but good practice). The Docker images get managed by Docker behind the scenes (details in the Docker session), so you don’t have to worry about that yourself:
-
-```bash
-docker pull atlas/analysisbase:21.2.75
-```
-
-The image should be around 4GB in size, so make sure you have the space available.
-
-> ## Latest Release...
-> These instructions will use a numbered release, which should be your default to work with. 
->
-> If you want to use the absolutely latest, bleeding edge version you can replace <br> ```atlas/analysisbase:21.2.75``` with ```atlas/analysisbase``` or ```atlas/analysisbase/latest```.
->
-{: .callout}
-
-## Download the Analysis ROOT File
-
-As previously mentioned the aim of this workshop is to give a background on the computing essentials you may need for your future analyses. However, it would be beneficial to learn these concepts and techniques in the context of a physics analysis. 
-
-We will be working with events from a DAOD ROOT file and the instructions to download this file can be found <strong><a href="https://cernbox.cern.ch/index.php/s/YXbCrQkwnZuc3yU">here</a></strong>.
-
-Please place that somewhere within your working directory.
-
-> ## Setup Checklist
-> - Download and installed Docker
-> - Downloaded the ATLAS AnalysisBase image
-> - Downloaded the ROOT file we will be working with
-> 
-> If this is all setup, you are free to continue
 {: .checklist}
+
+
+## Unix and Shells
+
+In Unix operating systems like Linux or OSX, the shell ("**the terminal**") is a program that interprets commands and acts as an intermediary
+between the user and the inner workings of the operating system. It can help you navigate
+your files and directories.  You can create (`touch` and `mkdir`), copy (`cp`) and delete (`rm`) files and repositories. Even more
+powerful things are possible such as working remotely with `ssh`, the transfer of files with `scp` and
+shell scripting tasks you do regularly.
+
+> ## What are those commands?
+>
+> If you are wondering what any of the commands are in the above paragraph, then you can always use the shell to
+> learn more by using the `man` command.  Read more about the `ssh` command by trying the following
+> ```bash
+> man ssh
+> ```
+> More importantly, if you are wondering how any of these commands work, then it is _imperative_ that you spend a day reviewing
+> how the shell works **prior to the bootcamp**.
+{: .callout}
+
+Software Carpentry provides two very nice in-depth tutorials on the shell
+- [Unix and the Shell](http://swcarpentry.github.io/shell-novice/) : <span style="color:red">**All participants should review this tutorial and ensure they are comfortable with its contents prior to the bootcamp.**</span>
+- [Advanced Techniques](http://swcarpentry.github.io/shell-extras/) : This is useful to review, but not necessary for this bootcamp.
+
+A few other very good go-to resources that are good to work through
+
+* [History of Unix and the Shell](https://www.distributednetworks.com/basic-unix-shell-scripts/module2/available-unix-shells.php) : The backstory of all this
+* [tutorialspoint.com](https://www.tutorialspoint.com/unix/unix-what-is-shell) : A good introduction to the shell and the basic utilities it has
+* [Shell Scripting](https://www.shellscript.sh/) : How to write code in the "bash" programming language
+
+
+Please take some time before the workshop to read through these.
+
+
+
+
+
+## Essential C++
+
+Throughout your studies and career in particle physics, you will find a large amount
+of your code and software will be written in C++. Within ATLAS for example, the software
+is very C++ based and many analysis frameworks are constructed using C++. The problem with
+teaching C++ in the context of research is that it is such a broad programming language
+that it becomes very difficult to adequately explain "the essential" things that you need to know.
+It would be very worth your while to enroll in a formal university level introduction to C++
+course and this _will_ pay dividends in your research. Fortunately, there is a large amount of C++
+material available and hopefully you can gain some basic understanding of C++ essentials if
+you are not familiar already. And for the purposes of this bootcamp, a certain amount of requisite
+knowledge is necessary, as highlighted below.  A few good references are :
+
+* [cplusplus.com](http://www.cplusplus.com/doc/tutorial/) : _The_ go-to reference for c++ with a solid tutorial.  <span style="color:red"> **All participants should review this tutorial and ensure they are comfortable with its contents.**</span> If you have questions about whether a particular concept is important or frequently used in HEP, please ask!
+* [learncpp](https://www.learncpp.com/) : A more long and drawn out tutorial.  It presents the same thins as [cplusplus.com](http://www.cplusplus.com/doc/tutorial/), but from a different perspective.
+* [tutorialspoint.com tutorial](https://www.tutorialspoint.com/cplusplus/) : Another very good reference with tutorials
+* [W3School tutorial](https://www.w3schools.com/cpp/) : W3 Schools covers more than just c++ including HTML, Java, etc. as well
+
+
+> ## The bare minimum
+>
+> Though the essential aspects and "bare minimum" is very subjective, a few of the most basic concepts that you should
+> be comfortable with are the following.
+> - Loops : [https://www.tutorialspoint.com/cplusplus/cpp_loop_types](https://www.tutorialspoint.com/cplusplus/cpp_loop_types)
+> - Vectors : [https://www.tutorialspoint.com/cpp_standard_library/vector](https://www.tutorialspoint.com/cpp_standard_library/vector)
+> - Pointers : [https://www.tutorialspoint.com/cplusplus/cpp_pointers](https://www.tutorialspoint.com/cplusplus/cpp_pointers)
+> - Function : [https://www.tutorialspoint.com/cplusplus/cpp_functions](https://www.tutorialspoint.com/cplusplus/cpp_functions)
+> - Classes : [https://www.tutorialspoint.com/cplusplus/cpp_classes_objects](https://www.tutorialspoint.com/cplusplus/cpp_classes_objects)
+> - Namespaces : [https://www.tutorialspoint.com/cplusplus/cpp_namespaces](https://www.tutorialspoint.com/cplusplus/cpp_namespaces)
+> - Inheritance/Polymorphism : [https://www.tutorialspoint.com/cplusplus/cpp_inheritance](https://www.tutorialspoint.com/cplusplus/cpp_inheritance)
+>
+> You can use this as the "bare minimum" checklist for this bootcamp and you will be expected to be familiar with these concepts throughout the bootcamp.
+>
+{: .callout}
+
+
+
+
+
+## The Build Process
+
+One of the computing bootcamp days will cover build systems, specifically [CMake](). To many individuals,
+compilation of C++ source code into machine executables is simply "something you do" with the `g++` or `gcc`
+commands.  However, there are a number of details and understanding them (at least the language to start)
+will make things much more clear.  A few very nice tutorials that you should review and understand can be found here.
+- [Tutorial 1](https://www3.ntu.edu.sg/home/ehchua/programming/cpp/gcc_make.html) : Very complete including a bit of history as well.
+- [Tutorial 2](https://www.geeksforgeeks.org/compiling-with-g-plus-plus/) : A bit more succinct.
+- [Tutorial 3](http://www.cplusplus.com/articles/2v07M4Gy/) : Only the concepts.
+
+> ## The bare minimum
+>
+> Though the essential aspects and "bare minimum" is very subjective, a few of the most basic concepts that you should
+> be comfortable with are the following.
+> - Source Code
+> - Headers
+> - Compilation
+> - Linking
+> - Libraries
+>
+> You can use this as the "bare minimum" checklist for this bootcamp and you will be expected to be familiar with these concepts throughout the bootcamp.
+>
+{: .callout}
+
+
+
+## Python
+
+[Python](https://www.python.org/) is a popular programming language that runs on an interpreter system.
+This means that unlike C++, you do not need to explicitly compile the code prior to running it.  Instead
+the code can be executed as soon as it is written. This makes it very appropriate for writing scripts and testing
+things quickly.  Python was designed for readability, and has some similarities to the English language with
+influence from mathematics (e.g. [sets](https://docs.python.org/2/library/sets.html)). Furthermore, it is possible
+to link C++ compiled libraries with python code, allowing you to form an "interface" between the two, thereby
+taking advantage of the best of both worlds.
+
+It is rare to not come across Python in some form when working in particle physics and data analysis, particularly
+when using advanced techniques in machine learning. In the ATLAS
+experiment, python is used in many places, most notably as a mechanism by which we "steer" our C++ code.  This is
+done in the form of [jobOptions]().  However, in this tutorial, we will not explicitly be using jobOptions to execute our code.
+This is something that is rather left for the [ATLAS software tutorial]().
+
+Software Carpentry provides a very nice introductory tutorial to python - [Link to Tutorial](http://swcarpentry.github.io/python-novice-inflammation/).
+<span style="color:red"> **All participants should review this tutorial and ensure they are comfortable with its contents prior to the bootcamp.**</span>
+
+Beyond this, a few additional resources that are very useful
+- [Python3](https://docs.python.org/3/) : Main point of entry for all things python3
+- [Python3 Tutorial](https://docs.python.org/3/tutorial/index.html) : Included linked from the page above.  This is the official tutorial.
+- [W3School Python Tutorial](https://www.w3schools.com/python/default.asp) : Like C++, W3Schools has their own tutorial. A different perspective.
+- [TutorialsPoint Python Tutorial](https://www.tutorialspoint.com/python/) : ... and another perspective.
+
+
 
 
 {% include links.md %}
