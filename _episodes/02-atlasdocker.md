@@ -4,7 +4,7 @@ teaching: 30
 exercises: 1
 questions:
 - What is a "release"?
-- How can I configure my laptop to function like lxplus at CERN?
+- How can I configure my laptop to use "ATLAS code"?
 objectives:
 - Setup your working environment with Docker
 - Load the ATLAS release through an image

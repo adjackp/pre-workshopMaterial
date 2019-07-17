@@ -1,62 +1,79 @@
 ---
-title: "Analysis Setup (Part 1)"
+title: "Running the Basic Analysis"
 teaching: 15
-exercises: 15
+exercises: 1
 questions:
-- "Key question (FIXME)"
+- What is the basic order of operations for building/executing your program with CMake?
+- How do you access the data of the DAOD within the C++ code?
 objectives:
-- "Start up the AnalysisBase Docker image"
-- "Copy the code to loop over events"
-- "Compile the payload to produce an executable"
-- "Run the executable and write out jet properties"
+- Start up the `AnalysisBase` Docker image
+- Copy the AnalysisPayload code to loop over events
+- Compile the payload to produce an executable program
+- Run the executable to print out jet properties
 keypoints:
-- "First key point. Brief Answer to questions. (FIXME)"
+- The directory where your source code lives and where you build the code are _two separate directories_.
+- When in doubt, you can always remove the entire contents of your `build` directory.
+- Information within the (D)AOD is organized in what is called the EDM.
+- Compiling/linking ATLAS code "by hand" is super long.  Thank goodness we have CMake.
+- Judiciously choose when to parameterize your ignorance.  It is a powerful approach, but remember **you are a smart human**, not a robot.
 ---
-
-> ## Important
->
-> If you have not completed the Setup section of the Pre-Workshop material please go do this now before going any further.
->
-{: .prereq}
 
 ## Start up a container from the Docker image
 
-Working from your shell create a directory on your laptop for the work you will be doing, called `Bootcamp` for example and enter that directory
+Working from your shell create a directory on your laptop for the work you will be doing,
+called `Bootcamp` for example and enter that directory.  This directory may already
+exist from the previous section and need not be named `Bootcamp`.
 
-~~~bash
+```bash
 mkdir Bootcamp
 cd Bootcamp
-~~~
+```
 
-Within this directory please make another directory named `Data` and put the VH file you downloaded earlier into this directory
+Within this directory, make another directory named `Data` and put the DAOD file you downloaded previously into this directory
 
-For example, moving the file over using the terminal... 
+For example, moving the file over using the terminal...
 
-~~~bash
+```bash
 mkdir Data
 mv <DataLocation/File.root> Data/.
-~~~
+```
 
-You can begin by starting up the container from the `AnalysisBase` Docker image using the command...
+Be sure that you are residing within the `Bootcamp` directory and then start up the
+container from the `AnalysisBase` Docker image.
 
-~~~
+```bash
 docker run --rm -it -v $PWD:/home/atlas/Bootcamp atlas/analysisbase:21.2.75 bash
+```
+
+This command is slightly extended from what you did previously.  It now includes this `-v $PWD:/home/atlas/Bootcamp`
+option which will place the entire file structure of your current working directory within the `/home/atlas/Bootcamp` directory
+of the image.  So when you immediately start the image, if you list the files in the current directory, you will see
+
+```bash
+[bash][atlas]:~ > ls
+Bootcamp  release_setup.sh
+[bash][atlas]:~ >
+```
+
+Again, you will learn more of these details on Thursday of the bootcamp if you are not familiar.  For now, what
+this allows you to do is load the ATLAS environment as before, and then when you move into `Bootcamp`,
+it is as if you were working with your local directory/file structure.  If you create or delete a file here,
+it will be created or deleted on your laptop.
+
+```bash
+source release_setup.sh
 cd Bootcamp
-~~~
-{: .language-bash}
+```
 
-this which will place the entire file structure within the `/home/atlas/Bootcamp` directory
-of the image. 
+You should now see the `Data` directory which you created and the test DAOD file contained within it.
 
-You should have also access to the DxAOD VH sample you just moved over. 
-
-## Copy code
+## Get the Analysis Code
 
 Create a file within `Bootcamp` called `AnalysisPayload.cxx`
 
-~~~bash
+```bash
 touch AnalysisPayload.cxx
-~~~
+```
 
 Open this file with your chosen editor, copy in the code below and then save.
 
@@ -106,7 +123,7 @@ int main() {
     // loop through all of the jets and make selections with the helper
     for(const xAOD::Jet* jet : *jets) {
       // print the kinematics of each jet in the event
-      std::cout << "Jet : " << jet->pt() << jet->eta() << jet->phi() << jet->m() << std::endl;
+      std::cout << "Jet : pt=" << jet->pt() << "  eta=" << jet->eta() << "  phi=" << jet->phi() << "  m=" << jet->m() << std::endl;
     }
 
     // counter for the number of events analyzed thus far
@@ -118,102 +135,132 @@ int main() {
 }
 ~~~
 
-The `inputFilePath` can be changed to reflect the location of the VH sample within the container, it should be something like `/home/atlas/Bootcamp/Data/<filename>.root`.
+The `inputFilePath` can be changed to reflect the location of the VH sample within the
+container, it should be something like `/home/atlas/Bootcamp/Data/<filename>.root` but
+may be slightly different depending on the naming you chose for your directories
+and when you booted up the Docker image.
 
-Have a read through the code and make sure you have an idea of what it is trying to do.
+> ## The EDM
+>
+> Everything in the program that you have just copied, and will soon compile, is nothing more than C++.
+> If some of the syntax appears strange to you (e.g. What does `::` mean? And what does this `const` mean?) then
+> it indicates you need to go back and review C++.  Please refer to the earlier portions to understand
+> what the essential concepts are.
+>
+> However, from native C++, and using libraries such as [ROOT](https://root.cern.ch/) and [BOOST](https://www.boost.org/), ATLAS has created what is called
+> the Event Data Model (EDM).  This is a flexible data structure that is tailored to accomplish the tasks that we
+> care about.  In this case, it means storing and retrieving information about hadronic jets.  In the EDM,
+> these appear as `xAOD::Jet` ([go look at the code yourself](https://gitlab.cern.ch/atlas/athena/tree/21.2/Event/xAOD/xAODJet))
+> objects.  Later you will be using this same EDM to access auxiliary information about an object.  However, the EDM
+> can do many more things and you will learn more about it as you work within ATLAS.  To learn more about it in a formal
+> way you should attend the [ATLAS Software Tutorial](https://indico.cern.ch/event/772589/) where there are [dedicated
+> sessions/talks devoted to the EDM](https://indico.cern.ch/event/772589/contributions/3210474/attachments/1786017/2907791/ATLAS_Event_Data_Model.pdf).
+>
+> The primary thing to take away here is that **the EDM is nothing more than a set of libraries written in native C++**.
+>
+{: .callout}
+
+> ## Going Deeper
+>
+> Have a read through the code and make sure you have an idea of what it is trying to do? Getting the code to run is
+> half the battle, but it is critical that you read through the code and understand what is happening.
+>
+> **"But how many details do I need to understand?"**
+>
+> Well, do you really need to know the details of what is happening in memory when `event.retrieve(jets, "AntiKt4EMTopoJets");` is executed?
+> Probably, all you need to know is that it copies a collection from the `EventStore` to the local `xAOD::JetContainer` that
+> you have called jets.  This idea of "_all you need to know_" is referred to some as "parameterizing your ignorance".  It
+> will be important to get a sense where you, as an individual and for your specific research goal, fall on the spectrum
+> of understanding all the details.
+>
+> However, do **NOT** get in the habit of just running code that someone gives you.  This is not research, and this is why we have computers.
+>
+{: .callout}
 
 ## Compiling and Linking
 
-Now it is time to compile your code so you are able to run. 
+Now it is time to compile your code so you are able to have it carry out your analysis.  In this first example, we will perform this
+build using the full `g++` command, to emphasize the fact that all that is going to be happening "under the hood" throughout the week
+(e.g. when we start using CMake) can be done with a single call to `g++`.
 
-Within the `Bootcamp` directory you can work through the following exercise to compile and link your program to produce an executable. 
+To do this, within the `Bootcamp` directory, start by running the command that will prepare your shell environment by setting a few
+paths necessary for `g++`.
 
-> ## Exercise
+~~~bash
+source /opt/lcg/binutils/2.28/x86_64-slc6/setup.sh
+source /opt/lcg/gcc/6.2.0binutils/x86_64-slc6/setup.sh
+~~~
+
+Now you are able to run the `g++` compiler on your `AnalysisPayload.cxx`.  Yes, its long and quite esoteric if you are not familiar with
+how the ATLAS codebase is organized "under the hood".  And indeed, few people are.  This is an example of a place where it is *totally fine*
+to parameterize your ignorance and let someone, or something else, do the heavy lifting.  That something will be CMake ... soon, we promise.
+
+For now, simply copy and paste this command into your terminal.
+
+~~~bash
+/opt/lcg/gcc/6.2.0binutils/x86_64-slc6/bin/g++   -DATLAS -DHAVE_64_BITS -DHAVE_PRETTY_FUNCTION -DROOTCORE -DROOTCORE_RELEASE_SERIES=25 -DXAOD_ANALYSIS -DXAOD_STANDALONE -D__IDENTIFIER_64BIT__  -I/usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/RootCore/include  -I/usr/AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/include  -isystem /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/src/Event/xAOD/xAODEventInfo  -isystem /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/src/Control/AthContainers  -isystem /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/src/Control/AthContainersInterfaces  -isystem /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/../../../../AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/include  -isystem /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/src/Control/AthLinksSA  -isystem /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/src/Control/xAODRootAccessInterfaces  -isystem /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/src/Control/CxxUtils  -isystem /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/src/Event/xAOD/xAODCore  -isystem /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/src/Control/xAODRootAccess  -isystem /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/src/Event/xAOD/xAODEventFormat  -isystem /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/src/Event/xAOD/xAODJet  -isystem /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/src/Event/xAOD/xAODBase  -isystem /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/src/Event/xAOD/xAODBTagging  -isystem /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/src/Event/xAOD/xAODTracking  -isystem /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/../../../../AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/include/eigen3  -isystem /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/src/DetectorDescription/GeoPrimitives  -isystem /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/src/Event/EventPrimitives  -isystem /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/src/Event/xAOD/xAODMuon  -isystem /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/src/Event/xAOD/xAODCaloEvent  -isystem /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/src/Calorimeter/CaloGeoHelpers  -isystem /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/src/Event/xAOD/xAODPrimitives  -isystem /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/src/MuonSpectrometer/MuonIdHelpers  -isystem /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/src/Event/xAOD/xAODPFlow  -isystem /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/src/Event/xAOD/xAODTrigger   -DNDEBUG -O2 -g -Wall -Wno-long-long -Wno-deprecated -Wno-unused-local-typedefs -Wwrite-strings -Wpointer-arith  -Woverloaded-virtual -Wextra -Werror=return-type -pedantic   -pthread -std=c++14  -o AnalysisPayload.cxx.o  -c /home/atlas/Bootcamp/AnalysisPayload.cxx
+~~~
+
+And now link the multiple object files into a single executable.
+
+~~~bash
+/opt/lcg/gcc/6.2.0binutils/x86_64-slc6/bin/g++  -DNDEBUG -O2 -g -Wall -Wno-long-long -Wno-deprecated -Wno-unused-local-typedefs -Wwrite-strings -Wpointer-arith -Woverloaded-virtual -Wextra -Werror=return-type -pedantic   -Wl,--as-needed -Wl,--hash-style=both AnalysisPayload.cxx.o  -o AnalysisPayload -Wl,-rpath,/usr/AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib:/usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib:/usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/../../../../AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib  /usr/AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libCore.so /usr/AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libImt.so /usr/AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libRIO.so /usr/AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libNet.so /usr/AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libHist.so /usr/AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libGraf.so /usr/AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libGraf3d.so /usr/AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libGpad.so /usr/AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libROOTDataFrame.so /usr/AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libTree.so /usr/AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libTreePlayer.so /usr/AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libRint.so /usr/AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libPostscript.so /usr/AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libMatrix.so /usr/AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libPhysics.so /usr/AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libMathCore.so /usr/AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libThread.so /usr/AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libMultiProc.so /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libxAODEventInfo.so /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libxAODRootAccess.so /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libxAODJet.so /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libxAODBTagging.so /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/../../../../AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libNet.so  /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/../../../../AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libMathCore.so  /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libxAODEventFormat.so /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libxAODMuon.so  /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libxAODPrimitives.so /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libMuonIdHelpersLib.so  /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libxAODPFlow.so  /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/../../../../AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libGenVector.so  /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libxAODTracking.so  /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libxAODTrigger.so  /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libxAODCaloEvent.so  /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libxAODCore.so  /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/../../../../AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libHist.so  /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/../../../../AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libTree.so  /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/../../../../AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libRIO.so  /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libxAODBase.so  /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libAthContainers.so  /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libAthLinks.so  /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libxAODRootAccessInterfaces.so  /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/../../../../AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libCore.so  /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/../../../../AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libPhysics.so  /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libCaloGeoHelpers.so  /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libCxxUtils.so  -pthread /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/../../../../AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libboost_program_options.so  /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/../../../../AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libboost_regex.so  /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/../../../../AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libboost_filesystem.so  /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/../../../../AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libboost_thread.so  /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/../../../../AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libboost_system.so  /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/../../../../AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libboost_timer.so  /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/../../../../AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libboost_chrono.so  /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/../../../../AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libboost_date_time.so  /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/../../../../AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libboost_atomic.so
+~~~
+
+an executable should have been created within your directory called `AnalysisPayload`
+
+> ## Hints
 >
-> Run the commands below to prepare your environment to be able to compile
-> 
-> ~~~bash
-> source /opt/lcg/binutils/2.28/x86_64-slc6/setup.sh
-> source /opt/lcg/gcc/6.2.0binutils/x86_64-slc6/setup.sh
-> ~~~
-> 
-> Now you are able to run the `g++` compiler on your `AnalysisPayload.cxx`
+> - If you are getting errors during compilation, it may very well be that you
+>   did not properly copy and paste all of the code in the previous portion of the exercise.
+>   Go back and verify that your source code is not missing something.  Though this should be
+>   evident from the error message it displays.
 >
-> ~~~bash
-> /opt/lcg/gcc/6.2.0binutils/x86_64-slc6/bin/g++   -DATLAS -DHAVE_64_BITS -DHAVE_PRETTY_FUNCTION -DROOTCORE -DROOTCORE_RELEASE_SERIES=25 -DXAOD_ANALYSIS -DXAOD_STANDALONE -D__IDENTIFIER_64BIT__  -I/usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/RootCore/include  -I/usr/AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/include  -isystem /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/src/Event/xAOD/xAODEventInfo  -isystem /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/src/Control/AthContainers  -isystem /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/src/Control/AthContainersInterfaces  -isystem /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/../../../../AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/include  -isystem /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/src/Control/AthLinksSA  -isystem /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/src/Control/xAODRootAccessInterfaces  -isystem /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/src/Control/CxxUtils  -isystem /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/src/Event/xAOD/xAODCore  -isystem /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/src/Control/xAODRootAccess  -isystem /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/src/Event/xAOD/xAODEventFormat  -isystem /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/src/Event/xAOD/xAODJet  -isystem /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/src/Event/xAOD/xAODBase  -isystem /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/src/Event/xAOD/xAODBTagging  -isystem /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/src/Event/xAOD/xAODTracking  -isystem /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/../../../../AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/include/eigen3  -isystem /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/src/DetectorDescription/GeoPrimitives  -isystem /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/src/Event/EventPrimitives  -isystem /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/src/Event/xAOD/xAODMuon  -isystem /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/src/Event/xAOD/xAODCaloEvent  -isystem /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/src/Calorimeter/CaloGeoHelpers  -isystem /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/src/Event/xAOD/xAODPrimitives  -isystem /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/src/MuonSpectrometer/MuonIdHelpers  -isystem /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/src/Event/xAOD/xAODPFlow  -isystem /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/src/Event/xAOD/xAODTrigger   -DNDEBUG -O2 -g -Wall -Wno-long-long -Wno-deprecated -Wno-unused-local-typedefs -Wwrite-strings -Wpointer-arith  -Woverloaded-virtual -Wextra -Werror=return-type -pedantic   -pthread -std=c++14  -o AnalysisPayload.cxx.o  -c /home/atlas/Bootcamp/AnalysisPayload.cxx
-> ~~~
+> - You may be getting permission denied messages, this is likely due to your root-user privilages
+>   with Docker have not been set up properly.
 >
-> And finally link the multiple object files into a single executable...
->
-> ~~~bash
-> /opt/lcg/gcc/6.2.0binutils/x86_64-slc6/bin/g++  -DNDEBUG -O2 -g -Wall -Wno-long-long -Wno-deprecated -Wno-unused-local-typedefs -Wwrite-strings -Wpointer-arith -Woverloaded-virtual -Wextra -Werror=return-type -pedantic   -Wl,--as-needed -Wl,--hash-style=both AnalysisPayload.cxx.o  -o AnalysisPayload -Wl,-rpath,/usr/AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib:/usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib:/usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/../../../../AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib  /usr/AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libCore.so /usr/AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libImt.so /usr/AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libRIO.so /usr/AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libNet.so /usr/AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libHist.so /usr/AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libGraf.so /usr/AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libGraf3d.so /usr/AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libGpad.so /usr/AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libROOTDataFrame.so /usr/AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libTree.so /usr/AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libTreePlayer.so /usr/AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libRint.so /usr/AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libPostscript.so /usr/AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libMatrix.so /usr/AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libPhysics.so /usr/AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libMathCore.so /usr/AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libThread.so /usr/AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libMultiProc.so /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libxAODEventInfo.so /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libxAODRootAccess.so /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libxAODJet.so /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libxAODBTagging.so /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/../../../../AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libNet.so  /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/../../../../AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libMathCore.so  /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libxAODEventFormat.so /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libxAODMuon.so  /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libxAODPrimitives.so /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libMuonIdHelpersLib.so  /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libxAODPFlow.so  /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/../../../../AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libGenVector.so  /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libxAODTracking.so  /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libxAODTrigger.so  /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libxAODCaloEvent.so  /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libxAODCore.so  /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/../../../../AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libHist.so  /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/../../../../AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libTree.so  /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/../../../../AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libRIO.so  /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libxAODBase.so  /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libAthContainers.so  /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libAthLinks.so  /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libxAODRootAccessInterfaces.so  /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/../../../../AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libCore.so  /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/../../../../AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libPhysics.so  /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libCaloGeoHelpers.so  /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libCxxUtils.so  -pthread /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/../../../../AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libboost_program_options.so  /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/../../../../AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libboost_regex.so  /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/../../../../AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libboost_filesystem.so  /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/../../../../AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libboost_thread.so  /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/../../../../AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libboost_system.so  /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/../../../../AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libboost_timer.so  /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/../../../../AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libboost_chrono.so  /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/../../../../AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libboost_date_time.so  /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/../../../../AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/lib/libboost_atomic.so
-> ~~~
->
-> an executable should have been created within your directory called `AnalysisPayload`
->
-> > ## Hints
-> > 
-> > * If you are getting errors it can sometimes help to start again with a fresh file and session of your container.
-> > * You may be getting permission denied messages, this is because of your root-user privilages with Docker have not been set up properly.
-> >
-> {: .callout}
-{: .challenge}
+{: .callout}
+
 
 ## Run executable
 
-It is time to run this executable and if everything worked out fine, it should print output after looping over the events in the VH xAOD ROOT file. 
+Alright, it is time to run this executable and if everything worked out fine, it should
+print some output after looping over the events in the test DAOD file.  Hopefully you have
+read the code and made a guess at what it will print out.  In this case, we are printing out
+the basic jet kinematics `(pT, eta, phi, m)`.
 
-Within the `Bootcamp` directory where your AnalysisPayload executable is, run the command.. 
+Within the `Bootcamp` directory, run the `AnalysisPayload` executable.
 
 ~~~bash
 ./AnalysisPayload
 ~~~
 
-If you have followed the instructions (and hopefully with no unexpected errors) you should get an output that looks something like this 
+If you have followed the instructions (and hopefully with no unexpected errors) you should get an output that looks something like this
 
 > ...
 >
 > Processing run # 284500, event # 4940346
 >
-> Jet : 58884.9-0.728219-3.107958552.21
+> Jet : pt=58884.9  eta=-0.728219  phi=-3.1079585 m=52.21
 >
-> Jet : 30194.40.952566-1.234023686.78
+> Jet : pt=30194.4  eta=0.952566  phi=-1.2340236  m=86.78
 >
-> Jet : 25141.3-0.8969511.879484527.64
->
-> Jet : 23075.2-0.167431-2.139482755.09
->
-> Jet : 20312-1.11594-2.714523810.94
->
-> Jet : 15962.82.02741-0.01260682330.59
->
-> Jet : 9609.71-4.31337-0.9151630.00368174
->
-> Jet : 6887.7-1.53393.021861617.57
->
-> Jet : 6706.07-2.832740.4439791139.5
->
-> Jet : 5659.63-1.97297-0.4942081476.55
->
-> Jet : 5460.870.321482-2.522641408.24
->
-> Jet : 5456.12.092550.9007921405.56
->
-> Jet : 5441.143.579441.80799519.316
->
-> Jet : 5086.05-2.80756-1.118850.00024513
+> Jet : pt=25141.3  eta=-0.896951  phi=1.8794845  m=27.64
 >
 > ...
 >
 {: .output}
 
-> ## Takeaway Point
-> 
-> As you can see, it is actually possible to compile and link your analysis code manually to produce an executable that runs over your xAODs. However, it is fair to say that the commands are ridiculously long and are prone to error. This example only accesses a jet container and print some properties but it is already very complicated, imagine the commands needed to run a full analysis framework. 
->
-> This is why ATLAS software uses things like CMake and GNU Make which you will learn more about this week but for now we will quickly convert our setup to use CMake to compile in the next part.
-{: .callout}
+ As you can see, it is actually possible to compile and link your analysis code manually
+to produce an executable that runs over your xAODs. However, it is fair to say that the
+commands are ridiculously long and are prone to error. This example only accesses a jet
+container and print some properties but it is already very complicated, imagine the commands
+needed to run a full analysis framework.
+
+This is why ATLAS software uses things like CMake and GNU Make which you will learn
+more about this week but for now we will quickly convert our setup to use CMake to
+compile in the next section. Go for it!
 
 
 {% include links.md %}
-`
+
