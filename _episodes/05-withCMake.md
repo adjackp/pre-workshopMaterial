@@ -59,30 +59,25 @@ this limited scope, within the `source` directory make a file called `CMakeLists
 add the following to it
 
 ~~~CMake
-cmake_minimum_required(VERSION 3.4 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.11)
 
 project(AnalysisPayload)
 
 find_package(ROOT)
 find_package(AnalysisBase)
 
-message(${ROOT_CXX_FLAGS})
+target_compile_definitions(ROOT::Core
+  INTERFACE ${ROOT_DEFINITIONS}
+)
 
 add_executable(AnalysisPayload AnalysisPayload.cxx)
 
-target_compile_definitions(AnalysisPayload
-  PRIVATE ${ROOT_DEFINITIONS}
-)
-
-target_include_directories(AnalysisPayload
-  PRIVATE ${ROOT_INCLUDE_DIRS}
-)
-
 target_link_libraries(AnalysisPayload
-  PRIVATE ${ROOT_LIBRARIES}
-  AnalysisBase::xAODEventInfo
-  AnalysisBase::xAODRootAccess
-  AnalysisBase::xAODJet
+  PRIVATE
+    ROOT::Core ${ROOT_LIBRARIES}
+    AnalysisBase::xAODEventInfo
+    AnalysisBase::xAODRootAccess
+    AnalysisBase::xAODJet
 )
 ~~~
 
