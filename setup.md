@@ -1,5 +1,5 @@
 ---
-title: HEP Computing "Basics"
+title: HEP/ATLAS Computing Fundamentals
 ---
 
 ## What you need to know
@@ -13,6 +13,7 @@ It is not necessary for you to be an expert but it would be beneficial to have s
 > - Essential C++ : Ensure you understand the concepts in the "Bare Minimum" checklist.
 > - Building Code : Know the difference between compiling and linking.
 > - Python : Review and understand the contents of the [Software Carpentry Tutorial](http://swcarpentry.github.io/python-novice-inflammation/).
+> - GitLab : The service used by CERN is [GitLab](https://gitlab.cern.ch/).  This one's easy, just make sure you can log in.
 >
 {: .checklist}
 
@@ -111,6 +112,7 @@ will make things much more clear.  A few very nice tutorials that you should rev
 > - Compilation
 > - Linking
 > - Libraries
+> - Preprocessor Flags (`-D` options)
 >
 > You can use this as the "bare minimum" checklist for this bootcamp and you will be expected to be familiar with these concepts throughout the bootcamp.
 >
@@ -143,7 +145,23 @@ Beyond this, a few additional resources that are very useful
 - [W3School Python Tutorial](https://www.w3schools.com/python/default.asp) : Like C++, W3Schools has their own tutorial. A different perspective.
 - [TutorialsPoint Python Tutorial](https://www.tutorialspoint.com/python/) : ... and another perspective.
 
+## GitLab
 
+You may be familiar with Git (if not, you will learn about it from Software Carpentries) and
+even have a [Git**Hub**](https://github.com/) account.  Many other equivalent services such
+as this, that serve as places where one can house remote repositories exist (e.g. [bitbucket](https://bitbucket.org)
+and [atlassian](https://www.atlassian.com/)) and the one that is used at CERN is [GitLab](https://gitlab.cern.ch/).
+
+> ## Log in to GitLab
+>
+> Confirm that your credentials work properly by logging into [GitLab](https://gitlab.cern.ch/) on
+> your web browser.  For this, just use the same username and password that you use for everything else
+> CERN-related.
+>
+> Once you do this, explore around the site a bit.  Fill in your profile information and upload a picture
+> to serve as your avatar.
+>
+{: .challenge}
 
 
 {% include links.md %}

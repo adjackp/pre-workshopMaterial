@@ -94,7 +94,44 @@ source release_setup.sh
 
 Your directory structure should now look a little something like this
 
-![](../fig/Dir2.png)
+>
+> [bash][atlas AnalysisBase-21.2.75]:Bootcamp > ls -lh . *
+>
+> **.:**
+>
+> total 44K
+>
+> drwxr-xr-x 8 atlas atlas 272 Jul 17 19:50 build
+>
+> drwxr-xr-x 3 atlas atlas 102 Jul 17 19:36 Data
+>
+> drwxr-xr-x 4 atlas atlas 136 Jul 17 19:38 source
+>
+>
+>
+> **build:**
+>
+> total 0K
+>
+>
+>
+> **Data:**
+>
+> total 2.7G
+>
+> -rw-r--r-- 1 atlas atlas 2.7G Jul 17 19:35 DAOD_EXOT27.17882744._000026.pool.root.1
+>
+>
+>
+> **source:**
+>
+> total 8.0K
+>
+> -rw-r--r-- 1 atlas atlas 2.3K Jul 17 19:44 AnalysisPayload.cxx
+>
+> -rw-r--r-- 1 atlas atlas  508 Jul 17 19:38 CMakeLists.txt
+>
+{: .output}
 
 Now it is time to let CMake and GNU Make do things for us.  This is carried out within the `build` directory.
 

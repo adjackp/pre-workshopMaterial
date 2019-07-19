@@ -4,13 +4,15 @@ teaching: 30
 exercises: 60
 questions:
 - What does the invariant mass spectrum of the two leading jets look like?
-- What is a "cut"?
+- What are two of the most commonly used "tools" in particle physics analysis?
 objectives:
 - Produce histograms of event and jet properties.
 - Get practice implementing basic C++ ROOT functionality.
 keypoints:
 - The m(jj) spectrum is peaked near the Higgs mass of ~125 GeV.
 - There seems to be a long tail on the high mass side.
+- Important Tool #1 : We examine data via a "projection" onto histograms (`TH1` in ROOT).
+- Important Tool #2 : Much of what we study in analysis is the behavior of four-momenta (`TLorentzVector` in ROOT).
 ---
 
 
@@ -98,7 +100,7 @@ not be left as a one-and-done exercise now.  So if you are struggling to make th
 > >     // loop through all of the jets and make selections with the helper
 > >     for(const xAOD::Jet* jet : *jets) {
 > >       // print the kinematics of each jet in the event
-> >       std::cout << "Jet : " << jet->pt() << jet->eta() << jet->phi() << jet->m() << std::endl;
+> >       std::cout << "Jet : pt=" << jet->pt() << "  eta=" << jet->eta() << "  phi=" << jet->phi() << "  m=" << jet->m() << std::endl;
 > >
 > >       jets_raw.push_back(*jet);
 > >
