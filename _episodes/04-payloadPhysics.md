@@ -69,13 +69,44 @@ You should now see the `Data` directory which you created and the test DAOD file
 
 ## Get the Analysis Code
 
+> ## REMINDER! : This is Not a Working ATLAS Analysis!
+>
+> The point of this analysis "payload" is to provide a context in which to exercise and
+> explore keep computing concepts.  Please appreciate that what you are going to develop
+> here should **NOT** be used to perform a full-fledged analysis within ATLAS.  Although
+> in principle it *could* be used for this, there are well-established frameworks (e.g. [EventLoop]()) that
+> include functionality that you will eventually desire.  They have been developed to
+> work efficiently to let you focus on the physics.
+>
+> With this in mind, have fun using this to think about physics during the bootcamp, but
+> when you and your supervisor embark on a "real analysis", follow the guidance about
+> the best practices found in the [ATLAS Software Tutorial](https://twiki.cern.ch/twiki/bin/view/AtlasComputing/SoftwareTutorial).
+>
+> <center>
+> <strong>
+> <font color="red">
+> <font size="+3">
+> This is not an example analysis from which you should build a full-fledged "real" analysis.  This should only be used in the context of this bootcamp for learning purposes.
+> </font>
+> </font>
+> </strong>
+> </center>
+>
+>
+{: .callout}
+
+
 Create a file within `Bootcamp` called `AnalysisPayload.cxx`
 
 ```bash
 touch AnalysisPayload.cxx
 ```
 
-Open this file with your chosen editor, copy in the code below and then save.
+Open this file with your chosen editor, copy in the code below and then save. The `inputFilePath` may have to be changed to reflect the location of the VH sample within the
+container, it should be something like `/home/atlas/Bootcamp/Data/<filename>.root` but
+may be slightly different depending on the naming you chose for your directories
+and when you booted up the Docker image.  Whatever the case, the file must reside **somewhere** within the directory
+structure that is "linked" to your Docker image via the `-v` option.  You will learn more about these details on Thursday.
 
 ~~~cpp
 // stdlib functionality
@@ -135,11 +166,6 @@ int main() {
 }
 ~~~
 
-The `inputFilePath` can be changed to reflect the location of the VH sample within the
-container, it should be something like `/home/atlas/Bootcamp/Data/<filename>.root` but
-may be slightly different depending on the naming you chose for your directories
-and when you booted up the Docker image.
-
 > ## The EDM
 >
 > Everything in the program that you have just copied, and will soon compile, is nothing more than C++.
@@ -157,23 +183,6 @@ and when you booted up the Docker image.
 > sessions/talks devoted to the EDM](https://indico.cern.ch/event/772589/contributions/3210474/attachments/1786017/2907791/ATLAS_Event_Data_Model.pdf).
 >
 > The primary thing to take away here is that **the EDM is nothing more than a set of libraries written in native C++**.
->
-{: .callout}
-
-> ## Going Deeper
->
-> Have a read through the code and make sure you have an idea of what it is trying to do? Getting the code to run is
-> half the battle, but it is critical that you read through the code and understand what is happening.
->
-> **"But how many details do I need to understand?"**
->
-> Well, do you really need to know the details of what is happening in memory when `event.retrieve(jets, "AntiKt4EMTopoJets");` is executed?
-> Probably, all you need to know is that it copies a collection from the `EventStore` to the local `xAOD::JetContainer` that
-> you have called jets.  This idea of "_all you need to know_" is referred to some as "parameterizing your ignorance".  It
-> will be important to get a sense where you, as an individual and for your specific research goal, fall on the spectrum
-> of understanding all the details.
->
-> However, do **NOT** get in the habit of just running code that someone gives you.  This is not research, and this is why we have computers.
 >
 {: .callout}
 
@@ -261,6 +270,22 @@ This is why ATLAS software uses things like CMake and GNU Make which you will le
 more about this week but for now we will quickly convert our setup to use CMake to
 compile in the next section. Go for it!
 
+> ## Going Deeper
+>
+> Have a read through the code and make sure you have an idea of what it is trying to do? Getting the code to run is
+> half the battle, but it is critical that you read through the code and understand what is happening.
+>
+> **"But how many details do I need to understand?"**
+>
+> Well, do you really need to know the details of what is happening in memory when `event.retrieve(jets, "AntiKt4EMTopoJets");` is executed?
+> Probably, all you need to know is that it copies a collection from the `EventStore` to the local `xAOD::JetContainer` that
+> you have called jets.  This idea of "_all you need to know_" is referred to some as "parameterizing your ignorance".  It
+> will be important to get a sense where you, as an individual and for your specific research goal, fall on the spectrum
+> of understanding all the details.
+>
+> However, do **NOT** get in the habit of just running code that someone gives you.  This is not research, and this is why we have computers.
+>
+{: .callout}
 
 {% include links.md %}
 
