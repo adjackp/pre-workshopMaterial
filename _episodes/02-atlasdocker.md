@@ -97,7 +97,7 @@ Depending on the operating system you are using on the local machine, links to s
       </article>
     </div>
   </div>
-</div> {% comment %} End of 'shell' section. {% endcomment %}
+</div> {% comment %} End of 'docker' section. {% endcomment %}
 
 > ## If something doesn't work
 > Docker is a standard industry tool.  The directions above should "just work".  That said, if you spend **one hour** working
