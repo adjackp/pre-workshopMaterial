@@ -75,8 +75,8 @@ Depending on the operating system you are using on the local machine, links to s
           <br/>
           Please read the relevant information on these pages, it should take no more than 5 minutes.
           <br/>
-          Another common way to install packages on Mac OSX is via the [homebrew](https://brew.sh/).  In the case of docker, you can easily install
-          docker by setting up homebrew and executing <code>brew install docker</code>.
+          Another common way to install packages on Mac OSX is via the <a href="https://brew.sh/">homebrew</a> package manager.  In the case of docker, you can easily install
+          docker by setting up homebrew and executing <code>brew cask install docker</code>.
           <br/>
         </p>
       </article>
