@@ -164,7 +164,7 @@ Configured AnalysisBase from: /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-
 ```
 
 > ## The CVMFS Way
-> One other common way to setup the analysis release is to use the (CernVM File System)[https://cernvm.cern.ch/portal/filesystem]
+> One other common way to setup the analysis release is to use the [CernVM File System](https://cernvm.cern.ch/portal/filesystem)
 > which is available on nearly all clusters within the collaboration.  In this case, you use the `setupATLAS` alias command
 > to initialize the `asetup` ("_athena_(a) setup") command which is subsequently used to create the surrounding ATLAS coding environment
 > by giving you access to the precompiled base release.  This would typically look something like
