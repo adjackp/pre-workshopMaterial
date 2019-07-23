@@ -50,7 +50,18 @@ A few other very good go-to resources that are good to work through
 
 Please take some time before the workshop to read through these.
 
-
+> ## The bare minimum
+>
+> Though the essential aspects and "bare minimum" is very subjective, a few of the most basic concepts that you should
+> be comfortable with are the following.
+> - Navigating files and directories (`pwd`,`ls` and `cd`)
+> - Create, copy and delete files and directories (`mkdir`, `touch`, `mv`, `cp` and `rm`)
+> - Executing shell scripts (`source script.sh`)
+> - Environmental Variables (`echo $ENVVAR`)
+>
+> You can use this as the "bare minimum" checklist for this bootcamp and you will be expected to be familiar with these concepts throughout the bootcamp.
+>
+{: .callout}
 
 
 
