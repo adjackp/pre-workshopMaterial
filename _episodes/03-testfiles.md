@@ -98,7 +98,18 @@ there are also utilities contained within the ATLAS release that allow you to in
 rigorous way.  We will see how to do both here.
 
 ### Manually
-After booting up the image as before, open the file in the ROOT interpreter (**NOTE** : You may need to use the `-b` option
+Booting up the image like so
+
+```bash
+docker run --rm -it -v $PWD:/home/atlas/Bootcamp atlas/analysisbase:21.2.75 bash
+```
+
+This command is slightly extended from what you did previously.  It now includes this `-v $PWD:/home/atlas/Bootcamp`
+option which will place the entire file structure of your current working directory within the `/home/atlas/Bootcamp` directory
+of the image. Therefore you should have access to the xAOD file you just downloaded.
+
+
+Open the file in the ROOT interpreter (**NOTE** : You may need to use the `-b` option
 here if your `DISPLAY` is not configured.)
 
 ~~~bash
