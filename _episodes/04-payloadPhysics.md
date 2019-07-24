@@ -125,7 +125,7 @@ int main() {
   xAOD::Init();
 
   // open the input file
-  TString inputFilePath = "/home/atlas/Bootcamp/Data/mc16_13TeV.345055.PowhegPythia8EvtGen_NNPDF3_AZNLO_ZH125J_MINLO_llbb_VpT.deriv.DAOD_EXOT27.e5706_s3126_r10724_p3840/DAOD_EXOT27.17882744._000026.pool.root.1";
+  TString inputFilePath = "/home/atlas/Bootcamp/Data/DAOD_EXOT27.17882744._000026.pool.root.1";
   xAOD::TEvent event;
   std::unique_ptr< TFile > iFile ( TFile::Open(inputFilePath, "READ") );
   event.readFrom( iFile.get() );
@@ -260,7 +260,9 @@ If you have followed the instructions (and hopefully with no unexpected errors) 
 >
 {: .output}
 
- As you can see, it is actually possible to compile and link your analysis code manually
+**Warning**: A common error here is that the path to the xAOD file is incorrect and your program cannot find it. Be careful to change the `inputFilePath` to reflect the path to the xAOD file on your system. 
+
+As you can see, it is actually possible to compile and link your analysis code manually
 to produce an executable that runs over your xAODs. However, it is fair to say that the
 commands are ridiculously long and are prone to error. This example only accesses a jet
 container and print some properties but it is already very complicated, imagine the commands
