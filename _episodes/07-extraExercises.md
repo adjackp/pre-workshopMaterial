@@ -59,7 +59,7 @@ If you found the previous exercises and setup too easy then here is a list of ot
 > ## Exercise 3
 >
 > Because this is a ZH process, where the Z boson decays to two charged leptons, there are not only `xAOD::Jets` in the event.
-> If you inspect your input DAOD file, you will also fine that there is are `xAOD::Electrons` and `xAOD::Muons` containers.  Try
+> If you inspect your input DAOD file, you will also find that there is are `xAOD::Electrons` and `xAOD::Muons` containers.  Try
 > to retrieve these in a similar way as the jets (but this time calling them `xAOD::Electrons` and `xAOD::Muons`).  You may need to
 > refer to the EDM to learn about the [`xAOD::Egamma`](https://gitlab.cern.ch/atlas/athena/tree/21.2/Event/xAOD/xAODEgamma) and
 > [`xAOD::Muon`](https://gitlab.cern.ch/atlas/athena/tree/21.2/Event/xAOD/xAODMuon) classes.

@@ -50,7 +50,18 @@ A few other very good go-to resources that are good to work through
 
 Please take some time before the workshop to read through these.
 
-
+> ## The bare minimum
+>
+> Though the essential aspects and "bare minimum" is very subjective, a few of the most basic concepts that you should
+> be comfortable with are the following.
+> - Navigating files and directories (`pwd`,`ls` and `cd`)
+> - Create, copy and delete files and directories (`mkdir`, `touch`, `mv`, `cp` and `rm`)
+> - Executing shell scripts (`source script.sh`)
+> - Environmental Variables (`echo $ENVVAR`)
+>
+> You can use this as the "bare minimum" checklist for this bootcamp and you will be expected to be familiar with these concepts throughout the bootcamp.
+>
+{: .callout}
 
 
 
@@ -133,8 +144,8 @@ taking advantage of the best of both worlds.
 It is rare to not come across Python in some form when working in particle physics and data analysis, particularly
 when using advanced techniques in machine learning. In the ATLAS
 experiment, python is used in many places, most notably as a mechanism by which we "steer" our C++ code.  This is
-done in the form of [jobOptions]().  However, in this tutorial, we will not explicitly be using jobOptions to execute our code.
-This is something that is rather left for the [ATLAS software tutorial]().
+done in the form of [jobOptions](https://atlassoftwaredocs.web.cern.ch/ABtutorial/alg_basic_job_options/) or a [steering macro](https://atlassoftwaredocs.web.cern.ch/ABtutorial/alg_basic_macro/).  However, in this tutorial, we will not explicitly be using jobOptions to execute our code.
+This is something that is rather left for the [ATLAS software tutorial](https://atlassoftwaredocs.web.cern.ch/ABtutorial/).
 
 Software Carpentry provides a very nice introductory tutorial to python - [Link to Tutorial](http://swcarpentry.github.io/python-novice-inflammation/).
 <span style="color:red"> **All participants should review this tutorial and ensure they are comfortable with its contents prior to the bootcamp.**</span>

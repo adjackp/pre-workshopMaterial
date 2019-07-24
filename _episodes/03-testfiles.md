@@ -64,6 +64,14 @@ directory that you will be using for the bootcamp
 </font>
 </center>
 
+> ## What is an ATLAS dataset?
+> - **A set of files** : It is not possible to put all the data from one run into one file. ATLAS uses aggregations of files containing events. These aggregations are called datasets.
+>
+> - **A container of datasets** : The distribution of ATLAS data introduces some additional complications. All the events for one particular set of simulation conditions is not necessarily produced all on one site, or all from one production task. Typically the first task will only produce a few events, and when everything works, more events will be produced by another task or tasks. Some datasets are the result of more than 20 succesful tasks. The set of files produced by one production task is known wirthin ATLAS as a "tid dataset" because they are named with a suffix "_tidnnnnnn" where nnnnnn is the task number. A dataset which is useful for physics contains in general several tid datasets.  The distributed data management manipulates these datasets using a concept of containers.  The container name is the physics dataset + a slash suffix.
+> The datasets which AMI catalogues for ProdDB output are the logical equivalent of the DDM container datasets, but AMI does not add a slash as the last character of every name.
+>
+> - **Physics Containers** : Data Preparation and Group production coordination use an interface in AMI to place datasets and dataset containers in "super" containers, based on Data Quality data (Good Run Lists), so that user analysis jobs can run over all of them without having to make their own selections. At present ATLAS DDM does not permit a second level of hierarchy. The AMI interface for making physics containers simulates a second level of hierarchy.
+{: .callout}
 
 > ## Rucio and the Grid
 >
@@ -186,8 +194,9 @@ to attend the [ATLAS Software Tutorial](https://twiki.cern.ch/twiki/bin/view/Atl
 
 For now, just start by booting up the image and setting up the release (you should be
 getting familiar with doing this and it may be a good idea to create an [alias](https://www.tutorialspoint.com/unix_commands/alias)
-to allow yourself to not have to copy and paste each time.).  Once this is done,
-execute the `checkxAOD.py` script.
+to allow yourself to not have to copy and paste each time.).  
+
+Once you are inside your image and you have setup your release, the `checkxAOD.py` executable should now be available to you. Execute the `checkxAOD.py` script with the path to your xAOD file as the first argument.
 
 ~~~bash
 checkxAOD.py Data/DAOD_EXOT27.17882744._000026.pool.root.1
