@@ -39,7 +39,6 @@ shell scripting tasks you do regularly.
 
 Software Carpentry provides two very nice in-depth tutorials on the shell
 - [Unix and the Shell](http://swcarpentry.github.io/shell-novice/) : <span style="color:red">**All participants should review this tutorial and ensure they are comfortable with its contents prior to the bootcamp.**</span>
-- [Advanced Techniques](http://swcarpentry.github.io/shell-extras/) : This is useful to review, but not necessary for this bootcamp.
 
 A few other very good go-to resources that are good to work through
 

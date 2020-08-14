@@ -52,10 +52,13 @@ Depending on the operating system you are using on the local machine, links to s
     <div class="tab-content">
       <article role="tabpanel" class="tab-pane active" id="docker-windows">
         <p>
-          <font color="red">It is highly recommended that you</font> <strong> DO NOT </strong> <font color="red">use Windows.  Few individuals
-          use this OS within the HEP community as most tools are designed for Unix-based systems.
+          <font color="red">It is usually recommended that you </font> <strong> DO NOT </strong> <font color="red">use Windows. It has caused problems in the past, very few individuals
+          use this OS within the HEP community as most tools are designed for Unix-based systems. 
           If you do have a Windows machine, consider making your computer a dual-boot machine </font>-
           <a href="https://opensource.com/article/18/5/dual-boot-linux">Link to Directions</a>
+          <br/>
+          <br/>
+          However, the support for Docker on Windows and has proven to be a viable option in recent Windows updates. Please follow the instructions below to try this setup.
           <br/>
           <br/>
           Download Docker for Windows <a href="https://docs.docker.com/docker-for-windows/install/">instructions</a>.<br>
@@ -86,14 +89,14 @@ Depending on the operating system you are using on the local machine, links to s
           Downloading and installing Docker for Linux may be slightly more difficult but please contact the organisers or tutors as soon as possible so they can help with any problems.<br>
           <br/>
           Here are the instructions for two popular Linux distributions:
-          <li><a href="https://docs.docker.com/install/linux/docker-ce/CentOS/">CentOS</a></li>
-          <li><a href="https://docs.docker.com/install/linux/docker-ce/ubuntu/">Ubuntu</a></li>
+          <li><a href="https://docs.docker.com/engine/install/centos/">CentOS</a></li>
+          <li><a href="https://docs.docker.com/engine/install/ubuntu/">Ubuntu</a></li>
           <br/>
           Instructions for other Linux distributions can be found on the Docker docs pages.
           <br/>
           <br/>
           <font color="red">Be sure to read the Docker documentation on post-installation steps for Linux and managing Docker
-          as a </font> <a href="https://docs.docker.com/install/linux/linux-postinstall/">non-root user</a>.
+          as a </font> <a href="https://docs.docker.com/engine/install/linux-postinstall/">non-root user</a>.
           <font color="red">This will allow you to edit files when you have started up the Docker container from your image. </font>
           <br/>
         </p>
@@ -126,7 +129,7 @@ Start by downloading the Docker image for the release you want using the `docker
 Docker behind the scenes (Again, more details in the Docker session), so you don’t have to worry about that yourself:
 
 ```bash
-docker pull atlas/analysisbase:21.2.75
+docker pull atlas/analysisbase:21.2.125
 ```
 
 The image should be around 4GB in size, so make sure you have the space available on your hard drive.
@@ -134,7 +137,7 @@ The image should be around 4GB in size, so make sure you have the space availabl
 > ## Latest Release
 > These instructions will use a numbered release, which should be your default to work with.
 >
-> If you want to use the absolutely latest, bleeding edge version you can replace ```atlas/analysisbase:21.2.75```
+> If you want to use the absolutely latest, bleeding edge version you can replace ```atlas/analysisbase:21.2.125```
 > with ```atlas/analysisbase``` or ```atlas/analysisbase/latest```.  However, doing so is not recommended for this bootcamp.
 > Though some times it can be fun to live on the edge, so go ahead, try to pull the very latest ATLAS `AnalysisBase` image.
 >
@@ -146,21 +149,21 @@ Let's now test to see whether this worked.  Now that you have pulled the release
 This is done using the `docker run` command.
 
 ```bash
-docker run --rm -it atlas/analysisbase:21.2.75 bash
+docker run --rm -it atlas/analysisbase:21.2.125 bash
 ```
-This will change the look of command prompt and you should now see `bash][atlas]:~ >` as your prompt.  If you
-list the files in this directory, you should see one file called `release_setup.sh`.  Sourcing this file will
+This will change the look of command prompt and you should now see something similar to `[bash][atlas]:workdir >` as your prompt.  If you
+list the files in this directory, you should see one file called `/release_setup.sh`.  Sourcing this file will
 load the release that is contained within the image.  Try is
 ```bash
-source release_setup.sh
+source /release_setup.sh
 ```
 If this worked properly and you have setup docker correctly, then you should see the following
 
 ```bash
-[bash][atlas]:~ > source release_setup.sh
-Configured GCC from: /opt/lcg/gcc/6.2.0binutils/x86_64-slc6
-Configured AnalysisBase from: /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt
-[bash][atlas AnalysisBase-21.2.75]:~ >
+[bash][atlas]:workdir > source /release_setup.sh 
+Configured GCC from: /opt/lcg/gcc/8.3.0-cebb0/x86_64-centos7/bin/gcc
+Configured AnalysisBase from: /usr/AnalysisBase/21.2.125/InstallArea/x86_64-centos7-gcc8-opt
+[bash][atlas AnalysisBase-21.2.125]:workdir > 
 ```
 
 > ## The CVMFS Way
@@ -175,8 +178,8 @@ Configured AnalysisBase from: /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-
 >  lsetup asetup        (or asetup) to setup an Athena release
 >  lsetup atlantis      Atlantis: event display
 > ...
-> -bash-4.2$ asetup AnalysisBase,21.2.75,here
-> Using AnalysisBase/21.2.75 [cmake] with platform x86_64-slc6-gcc62-opt
+> -bash-4.2$ asetup AnalysisBase,21.2.125,here
+> Using AnalysisBase/21.2.125 [cmake] with platform x86_64-slc6-gcc62-opt
 >   at /cvmfs/atlas.cern.ch/repo/sw/software/21.2
 > Test area: /afs/cern.ch/user/m/meehan/delme
 > -bash-4.2$

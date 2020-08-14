@@ -31,7 +31,7 @@ throughout the week and add what you learn each day of the bootcamp.
 > The point of this analysis "payload" is to provide a context in which to exercise and
 > explore keep computing concepts.  Please appreciate that what you are going to develop
 > here should **NOT** be used to perform a full-fledged analysis within ATLAS.  Although
-> in principle it *could* be used for this, there are well-established frameworks (e.g. [EventLoop]()) that
+> in principle it *could* be used for this, there are well-established frameworks (e.g. EventLoop) that
 > include functionality that you will eventually desire.  They have been developed to
 > work efficiently to let you focus on the physics.
 >

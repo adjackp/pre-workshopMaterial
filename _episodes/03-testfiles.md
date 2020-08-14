@@ -17,7 +17,7 @@ keypoints:
 ## ATLAS Input Files
 
 The ATLAS experiment uses an "Analysis Object Data" (AOD) file to store the event information which is the result
-of a long chain of data taking or simulation and reconstruction - [Link to reco_tf.py]().  In fact, this file format
+of a long chain of data taking or simulation and reconstruction.  In fact, this file format
 is made more user friendly by allowing it to interface and be browsable as an *__x__*AOD.  So if you have an xAOD available
 (soon you will), you can simply open a TBrowser and [look at it like a normal ROOT file](https://twiki.cern.ch/twiki/bin/view/AtlasComputing/SoftwareTutorialxAODEDM#Browsing_the_xAOD_with_the_TBrow).
 
@@ -101,7 +101,7 @@ rigorous way.  We will see how to do both here.
 Booting up the image like so
 
 ```bash
-docker run --rm -it -v $PWD:/home/atlas/Bootcamp atlas/analysisbase:21.2.75 bash
+docker run --rm -it -v $PWD:/home/atlas/Bootcamp atlas/analysisbase:21.2.125 bash
 ```
 
 This command is slightly extended from what you did previously.  It now includes this `-v $PWD:/home/atlas/Bootcamp`
@@ -118,9 +118,15 @@ root -b DAOD_EXOT27.17882744._000026.pool.root.1
 
 ~~~
    ------------------------------------------------------------
-  | Welcome to ROOT 6.16/00                  https://root.cern |
-  |                               (c) 1995-2018, The ROOT Team |
-  | Built for linuxx8664gcc on Jan 23 2019, 09:06:13           |
+  | Welcome to ROOT 6.18/04                  https://root.cern |
+  |                               (c) 1995-2019, The ROOT Team |
+  | Built for linuxx8664gcc on Sep 11 2019, 15:38:23           |
+  | From tags/v6-18-04@v6-18-04                                |
+  | Try '.help', '.demo', '.license', '.credits', '.quit'/'.q' |
+   ------------------------------------------------------------
+
+root [0] 
+Attaching file DAOD_EXOT27.17882744._000026.pool.root.1 as _file0...
 ...
 ...
 ...
@@ -199,7 +205,7 @@ An alternative way to view the contents of an xAOD file is to use some of the ut
 that come available with the release.  These are nothing more than scripts that you could
 write yourself, but carry out common tasks that many people use frequently.  In this case
 we will be using the `checkxAOD.py` executable which is contained within the the `bin`
-directory of the image `/usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt/bin`.
+directory of the image `/usr/AnalysisBase/21.2.125/InstallArea/x86_64-centos7-gcc8-opt/bin`.
 However, many more executables exist with useful utilities, and for those, we would refer you
 to attend the [ATLAS Software Tutorial](https://twiki.cern.ch/twiki/bin/view/AtlasComputing/SoftwareTutorial).
 
