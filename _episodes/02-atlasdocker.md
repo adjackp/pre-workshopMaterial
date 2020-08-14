@@ -107,8 +107,8 @@ Depending on the operating system you are using on the local machine, links to s
 
 > ## If something doesn't work
 > Docker is a standard industry tool.  The directions above should "just work".  That said, if you spend **one hour** working
-> by yourself and still find that you are having issues with the basic setup, **ASK SOMEONE**!!!  We have created a mattermost channel
-> ([Link to Mattermost Channel](https://mattermost.web.cern.ch/signup_user_complete/?id=qp87x1fco7rj88k44rjhgmmube)) where you
+> by yourself and still find that you are having issues with the basic setup, **ASK SOMEONE**!!!  We have created a Discord server
+> ([Link to Discord](https://discord.gg/wQqm2qV)) where you
 > can dynamically ask tutors and other participants questions.  This pertains to setting up Docker as well as _every other portion of the bootcamp_.
 >
 > And more broadly, this is a very good general rule of thumb to get into.  If you are struggling with something, particularly if it is technical, don't needlessly
@@ -116,7 +116,7 @@ Depending on the operating system you are using on the local machine, links to s
 > what collaboration is all about anyways. So do one of the following :
 > - Ask the person sitting next to you
 > - Ask that helpful person on your analysis team or working group
-> - Ask a skype channel or mattermost chat
+> - Ask a Skype channel, Mattermost or Discord chat
 > - Ask a mailing list
 >
 > When you are done, just be sure to say _"thank you"_. #teamworkmakesthedreamwork

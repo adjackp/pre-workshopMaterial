@@ -42,7 +42,7 @@ use these tools so that they are no longer black boxes and you are not "just fol
 > more efficient progress in your immediate research question.
 >
 > As a rule of thumb, if you find yourself stuck at any point during this bootcamp for one hour, then ask someone. To
-> facilitate this, we have created a Mattermost chat group - [Link to Mattermost Channel](https://mattermost.web.cern.ch/signup_user_complete/?id=qp87x1fco7rj88k44rjhgmmube).
+> facilitate this, we have created a Discord server - [Link to Discord](https://discord.gg/wQqm2qV).
 > Join it and start asking questions to your colleagues and the tutors.
 >
 {: .callout}

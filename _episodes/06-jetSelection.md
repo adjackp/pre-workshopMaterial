@@ -38,7 +38,7 @@ not be left as a one-and-done exercise now.  So if you are struggling to make th
 > <img src="../fig/spectrum_mjj.png" style="width:500px;height:400px">
 > </center>
 >
-> You are not meant to struggle with this exercise.  If you are having troubles, please ask on the Mattermost channel.  However
+> You are not meant to struggle with this exercise.  If you are having troubles, please ask on the Discord.  However
 > if you find it more useful, a sample solution is included below. However please try your best to complete the exercise
 > before attending the workshop.  It will be assumed on Monday that everyone has a working version of this code locally on their
 > computer.
