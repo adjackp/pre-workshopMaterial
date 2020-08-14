@@ -57,7 +57,7 @@ The verbose name of the dataset container is
 
 To allow for reproducibility of results and compatibility among all of the participants at the bootcamp, a single one of the files from this
 container has been extracted and placed on the [CERNBox](https://cernbox.cern.ch). Please download this file and place it somewhere in the
-directory that you will be using for the bootcamp
+directory that you will be using for the bootcamp. It is quite large so don't worry if it takes some time (2.7GB).
 <center>
 <font size="10">
 <a href="https://cernbox.cern.ch/index.php/s/YXbCrQkwnZuc3yU">Link to Download File</a>

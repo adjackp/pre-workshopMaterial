@@ -31,7 +31,7 @@ paradigm.  Now, you will be dividing your work into two "areas". The first,
 your `source` directory, is where your source code lives.  The second, your `build` directory,
 is where you will use CMake to perform the build and where you executables will appear.
 
-If you haven't already, you might as well delete the `AnalysisPayload` that you created before.
+If you haven't already, you might as well delete the `AnalysisPayload` that you created before and the `.o` file.
 You will be creating it again now.  Then, start by creating a separate directory within `Bootcamp`
 called `source` and move `AnalysisPayload.cxx` into it
 
@@ -44,7 +44,6 @@ mv AnalysisPayload.cxx source/.
 Now create a `build` directory that is at the same level as `source`
 
 ~~~bash
-cd Bootcamp
 mkdir build
 ~~~
 
@@ -89,47 +88,30 @@ To use this new setup, boot up the image as before and setup the release using t
 
 ~~~bash
 docker run --rm -it -v $PWD:/home/atlas/Bootcamp atlas/analysisbase:21.2.75 bash
-source release_setup.sh
+cd /home/atlas/Bootcamp
+source ~/release_setup.sh
 ~~~
 
 Your directory structure should now look a little something like this
 
 >
-> [bash][atlas AnalysisBase-21.2.75]:Bootcamp > ls -lh . *
+> .
 >
-> **.:**
+> ├── build
 >
-> total 44K
+> ├── Data
 >
-> drwxr-xr-x 8 atlas atlas 272 Jul 17 19:50 build
+>            └── DAOD_EXOT27.17882744._000026.pool.root.1
 >
-> drwxr-xr-x 3 atlas atlas 102 Jul 17 19:36 Data
+> └── source
 >
-> drwxr-xr-x 4 atlas atlas 136 Jul 17 19:38 source
+>            ├── AnalysisPayload.cxx
 >
->
->
-> **build:**
->
-> total 0K
+>            └── CMakeLists.txt
 >
 >
+> 3 directories, 3 files
 >
-> **Data:**
->
-> total 2.7G
->
-> -rw-r--r-- 1 atlas atlas 2.7G Jul 17 19:35 DAOD_EXOT27.17882744._000026.pool.root.1
->
->
->
-> **source:**
->
-> total 8.0K
->
-> -rw-r--r-- 1 atlas atlas 2.3K Jul 17 19:44 AnalysisPayload.cxx
->
-> -rw-r--r-- 1 atlas atlas  508 Jul 17 19:38 CMakeLists.txt
 >
 {: .output}
 
@@ -142,13 +124,13 @@ cmake ../source/
 
 > [bash][atlas AnalysisBase-21.2.75]:build > cmake ../source/
 >
-> -- The C compiler identification is GNU 6.2.0
+> -- The C compiler identification is GNU 8.3.0
 >
-> -- The CXX compiler identification is GNU 6.2.0
+> -- The CXX compiler identification is GNU 8.3.0
 >
-> -- Check for working C compiler: /opt/lcg/gcc/6.2.0binutils/x86_64-slc6/bin/gcc
+> -- Check for working C compiler: /opt/lcg/gcc/8.3.0-cebb0/x86_64-centos7/bin/gcc
 >
-> -- Check for working C compiler: /opt/lcg/gcc/6.2.0binutils/x86_64-slc6/bin/gcc -- works
+> -- Check for working C compiler: /opt/lcg/gcc/8.3.0-cebb0/x86_64-centos7/bin/gcc -- works
 >
 > -- Detecting C compiler ABI info
 >
@@ -158,9 +140,9 @@ cmake ../source/
 >
 > -- Detecting C compile features - done
 >
-> -- Check for working CXX compiler: /opt/lcg/gcc/6.2.0binutils/x86_64-slc6/bin/g++
+> -- Check for working CXX compiler: /opt/lcg/gcc/8.3.0-cebb0/x86_64-centos7/bin/g++
 >
-> -- Check for working CXX compiler: /opt/lcg/gcc/6.2.0binutils/x86_64-slc6/bin/g++ -- works
+> -- Check for working CXX compiler: /opt/lcg/gcc/8.3.0-cebb0/x86_64-centos7/bin/g++ -- works
 >
 > -- Detecting CXX compiler ABI info
 >
@@ -170,19 +152,19 @@ cmake ../source/
 >
 > -- Detecting CXX compile features - done
 >
-> -- Found AnalysisBase: /usr/AnalysisBase/21.2.75/InstallArea/x86_64-slc6-gcc62-opt (version: 21.2.75)
+> -- Found AnalysisBase: /usr/AnalysisBase/21.2.125/InstallArea/x86_64-centos7-gcc8-opt (version: 21.2.125)
 >
-> -- Found AnalysisBaseExternals: /usr/AnalysisBaseExternals/21.2.75/InstallArea/x86_64-slc6-gcc62-opt (version: 21.2.75)
+> -- Found AnalysisBaseExternals: /usr/AnalysisBaseExternals/21.2.125/InstallArea/x86_64-centos7-gcc8-opt (version: 21.2.125)
 >
 > -- Setting ATLAS specific build flags
 >
 > -- checker_gccplugins library not found
 >
-> -- Package(s) in AnalysisBaseExternals: 20
+> -- Package(s) in AnalysisBaseExternals: 22
 >
 > -- Using the LCG modules without setting up a release
 >
-> -- Package(s) in AnalysisBase: 174
+> -- Package(s) in AnalysisBase: 194
 >
 > -- Looking for pthread.h
 >
@@ -198,10 +180,10 @@ cmake ../source/
 >
 > -- Found Threads: TRUE
 >
->  -pipe -m64 -fsigned-char -pthread -std=c++14
->
 > -- Configuring done
+>
 > -- Generating done
+>
 > -- Build files have been written to: /home/atlas/Bootcamp/build
 >
 {: .output}
@@ -210,8 +192,7 @@ cmake ../source/
 make
 ~~~
 
-
-> [bash][atlas AnalysisBase-21.2.75]:build > make
+> [bash][atlas AnalysisBase-21.2.125]:build > make
 >
 > Scanning dependencies of target AnalysisPayload
 >
@@ -231,7 +212,7 @@ directory and you can execute it as before.
 ~~~
 
 Hopefully you get the same results as before with a small percentage of the hassle. You will learn more
-about each line of the `CMakeLists.txt` file is doing on Tuesday, though there is a
+about each line of the `CMakeLists.txt` file is doing in the CMake session, though there is a
 [tutorial](https://cmake.org/cmake-tutorial/) if you are super eager.  **This is in no way mandatory or recommended!
 As long as you got the above to work, you are good-to-go!**
 

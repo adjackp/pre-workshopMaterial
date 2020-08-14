@@ -30,7 +30,7 @@ pre-requisite to be able to write code to analyze ATLAS data (and Monte Carlo si
 
 There are a few ways to get access to this pre-compiled codebase.  For the majority of this
 workshop we will be using [Docker](https://www.docker.com/) to do this and working in an ```AnalysisBase```
-release container.  You will learn more about the details of Docker on Thursday of the workshop
+release container.  You will learn more about the details of Docker later in the week of the workshop
 and what is presented here is only the minimal setup which will allow you to work through the tutorial.
 
 
@@ -151,19 +151,21 @@ This is done using the `docker run` command.
 ```bash
 docker run --rm -it atlas/analysisbase:21.2.125 bash
 ```
-This will change the look of command prompt and you should now see something similar to `[bash][atlas]:workdir >` as your prompt.  If you
-list the files in this directory, you should see one file called `/release_setup.sh`.  Sourcing this file will
+This will change the look of command prompt and you should now see something similar to `[bash][atlas]:~ >` as your prompt.  If you
+list the files in this directory, you should see one file called `release_setup.sh` if you're in your 'home' directory `/home/atlas/`.  Sourcing this file will
 load the release that is contained within the image.  Try is
 ```bash
-source /release_setup.sh
+# If you're not there already
+cd /home/atlas/
+source release_setup.sh
 ```
 If this worked properly and you have setup docker correctly, then you should see the following
 
 ```bash
-[bash][atlas]:workdir > source /release_setup.sh 
+[bash][atlas]:~ > source release_setup.sh 
 Configured GCC from: /opt/lcg/gcc/8.3.0-cebb0/x86_64-centos7/bin/gcc
 Configured AnalysisBase from: /usr/AnalysisBase/21.2.125/InstallArea/x86_64-centos7-gcc8-opt
-[bash][atlas AnalysisBase-21.2.125]:workdir > 
+[bash][atlas AnalysisBase-21.2.125]:~ > 
 ```
 
 > ## The CVMFS Way

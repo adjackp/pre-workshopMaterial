@@ -11,8 +11,8 @@ objectives:
 keypoints:
 - The m(jj) spectrum is peaked near the Higgs mass of ~125 GeV.
 - There seems to be a long tail on the high mass side.
-- Important Tool #1 : We examine data via a "projection" onto histograms (`TH1` in ROOT).
-- Important Tool #2 : Much of what we study in analysis is the behavior of four-momenta (`TLorentzVector` in ROOT).
+- Important Tool 1 - We examine data via a "projection" onto histograms (`TH1` in ROOT).
+- Important Tool 2 - Much of what we study in analysis is the behavior of four-momenta (`TLorentzVector` in ROOT).
 ---
 
 
@@ -63,7 +63,7 @@ not be left as a one-and-done exercise now.  So if you are struggling to make th
 > >   xAOD::Init();
 > >
 > >   // open the input file
-> >   TString inputFilePath = "/home/atlas/Bootcamp/Data/mc16_13TeV.345055.PowhegPythia8EvtGen_NNPDF3_AZNLO_ZH125J_MINLO_llbb_VpT.deriv.DAOD_EXOT27.e5706_s3126_r10724_p3840/DAOD_EXOT27.17882744._000026.pool.root.1";
+> >   TString inputFilePath = "/home/atlas/Bootcamp/Data/DAOD_EXOT27.17882744._000026.pool.root.1";
 > >   xAOD::TEvent event;
 > >   std::unique_ptr< TFile > iFile ( TFile::Open(inputFilePath, "READ") );
 > >   event.readFrom( iFile.get() );
