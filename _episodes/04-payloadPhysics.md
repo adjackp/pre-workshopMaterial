@@ -64,12 +64,10 @@ it is as if you were working with your local directory/file structure.  If you c
 it will be created or deleted on your laptop.
 
 ```bash
-source ~/release_setup.sh
+source /release_setup.sh
 Configured GCC from: /opt/lcg/gcc/8.3.0-cebb0/x86_64-centos7/bin/gcc
 Configured AnalysisBase from: /usr/AnalysisBase/21.2.125/InstallArea/x86_64-centos7-gcc8-opt
 ```
-
-Note, the location of `release_setup.sh may differ depending on permissions but hopefully you can find it.  
 
 You should now see the `Data` directory which you created and the test DAOD file contained within it.
 

@@ -58,7 +58,7 @@ this limited scope, within the `source` directory make a file called `CMakeLists
 add the following to it
 
 ~~~CMake
-cmake_minimum_required(VERSION 3.11)
+cmake_minimum_required(VERSION 3.14)
 
 project(AnalysisPayload)
 
@@ -89,7 +89,7 @@ To use this new setup, boot up the image as before and setup the release using t
 ~~~bash
 docker run --rm -it -v $PWD:/home/atlas/Bootcamp atlas/analysisbase:21.2.75 bash
 cd /home/atlas/Bootcamp
-source ~/release_setup.sh
+source /release_setup.sh
 ~~~
 
 Your directory structure should now look a little something like this
@@ -122,7 +122,7 @@ cd build
 cmake ../source/
 ~~~
 
-> [bash][atlas AnalysisBase-21.2.75]:build > cmake ../source/
+> [bash][atlas AnalysisBase-21.2.125]:build > cmake ../source/
 >
 > -- The C compiler identification is GNU 8.3.0
 >
