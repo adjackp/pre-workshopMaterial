@@ -87,7 +87,7 @@ That's it, now let's use it!
 To use this new setup, boot up the image as before and setup the release using the `release_setup.sh` script.
 
 ~~~bash
-docker run --rm -it -v $PWD:/home/atlas/Bootcamp atlas/analysisbase:21.2.75 bash
+docker run --rm -it -v $PWD:/home/atlas/Bootcamp atlas/analysisbase:21.2.125 bash
 cd /home/atlas/Bootcamp
 source /release_setup.sh
 ~~~
