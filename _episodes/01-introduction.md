@@ -73,7 +73,7 @@ two charged leptons which are either electrons or muons.  This is identified wit
 >
 {: .callout}
 
-## The Money Plot : m(jj)
+## The Key Plot: m(jj)
 
 The challenge of this search is in reconstructing the decay of the Higgs to a pair of b-quarks, which appear in the
 detector as hadronic jets ([0712.2447](https://arxiv.org/abs/0712.2447)).  However, if you can correctly identify
@@ -102,4 +102,3 @@ Therefore, throughout this bootcamp, this is the primary observable that we will
 
 
 {% include links.md %}
-
