@@ -4,7 +4,7 @@ title: Pre-Workshop Material
 root: .  # Is the only page that doesn't follow the pattern /:path/index.html
 permalink: index.html  # Is the only page that doesn't follow the pattern /:path/index.html
 ---
-Welcome to US ATLAS/First-HEP computing bootcamp! The aim of this week is to give you
+Welcome to the US ATLAS/First-HEP computing bootcamp! The aim of this week is to give you
 an understanding of fundamental tools and techniques in computing that will be using throughout
 your time in ATLAS, and more broadly, particle physics.  However, from the get-go you should appreciate
 that the skills you will learn here are applicable beyond your career in physics and are used
@@ -46,6 +46,13 @@ use these tools so that they are no longer black boxes and you are not "just fol
 > Join it and start asking questions to your colleagues and the tutors.
 >
 {: .callout}
+
+<br>
+<div class="text-center">
+  <a href="https://matthewfeickert.github.io/usatlas-computing-bootcamp-2020/">
+    <button type="button" class="btn btn-info" style="font-size:large;text-align:center">US ATLAS Computing Bootcamp 2020</button>
+  </a>
+</div>
 
 {% include links.md %}
 
